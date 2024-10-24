@@ -9,6 +9,9 @@ class HomeView(TemplateView):
 def nosotros_view(request):
     return render(request, 'nosotros.html')
 
+def curriculom_view(request):
+    return render(request, 'curriculom.html')
+
 
 def contacto_view(request):
     if request.method == 'POST':

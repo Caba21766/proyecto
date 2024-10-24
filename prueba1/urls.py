@@ -24,6 +24,7 @@ from . import views
 from .views import HomeView
 from django.urls import path, include
 
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", HomeView.as_view() , name='index' ),
@@ -32,6 +33,8 @@ urlpatterns = [
     path('formulario/', views.contacto_view, name='formulario'),
     path('gracias/', views.gracias_view, name='gracias'),
     path('nosotros/', views.nosotros_view, name='nosotros'),
+    path('curriculom/', views.curriculom_view, name='curriculom'),
+
     path("opiniones/", include('apps.opiniones.urls')),
 
     
