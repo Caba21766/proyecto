@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Acerca de Nosotros{% endblock %}
+
+{% block navegacion %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <a href="{% url 'index' %}">
+        <img src="{% static 'img/logo.png' %}" alt="" width="100" height="100">
+    </a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {% if user.is_staff %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Act. Herramientas
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'apps.libros:agregar_categoria' %}">Agregar categoría</a></li>
+                    <li><a class="dropdown-item" href="{% url 'apps.libros:agregar_libro' %}">Act. Sistema</a></li>
+                </ul>
+            </li>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ user.username }}
+                </a>
+                <ul class="dropdown-menu">
+                    <form method="POST" action="{% url 'apps.blog_auth:cerrar_sesion' %}">
+                        {% csrf_token %}
+                        <button type="submit">Cerrar Sesión</button>
+                    </form>
+                </ul>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'nosotros' %}">Nosotros</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'formulario' %}">Formulario</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'apps.blog_auth:iniciar_sesion' %}">Iniciar sesión</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+{% endblock %}
+
+{% block contenido %}
+<div style="min-height: calc(80vh - 160px); display: flex; flex-direction: column; justify-content: center; text-align: center;">
+    <h1 style="color: #333 !important;">¡Gracias por contactarnos</h1>
+    <p style="color: #333 !important;">Tu consulta ha sido enviada con éxito. Nos pondremos en contacto contigo pronto.</p>
+</div>
+{% endblock %}

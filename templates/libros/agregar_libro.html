@@ -1,0 +1,19 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block navegacion %}
+{% include 'navegacion.html' %}
+{% endblock %}
+
+{% block contenido %}
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h1 style="color: #333333 !important; margin-left: 20%;">Agregar Libro</h1>
+    <p style="color: #333333 !important; margin-left: 15%;">Ingrese los datos y presione el boton de guardar</p>
+    {{ form.as_p }}
+    <div style="display: flex; justify-content: flex-start; padding-left: 30%;">
+    <input type="submit" class="btn btn-primary" value="Guardar">
+</div>
+</form>
+{% endblock %}

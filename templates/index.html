@@ -1,0 +1,443 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es-ar">
+          <!-- explicacion: lo primero que deben incluir dentro del documento html es el head, 
+          dentro de el agregaremos titulo, enlaces a hojas de estilo y fuentes entre otras cosas -->
+  <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <!-- Enlace a Bootstrap CSS -->
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+            <!-- Título del sitio -->
+            <title>Portfolio</title>
+            <!-- Enlace a tus estilos CSS -->
+            <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+            <!-- Preconexión para mejorar el rendimiento de Google Fonts -->
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+            <!-- Enlace a las fuentes de Google -->
+            <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet"/>
+            <!-- Favicon -->
+            <link rel="shortcut icon" href="{% static 'assets/favicon.ico' %}" type="image/x-icon" />
+  </head>
+
+<!-- repaso de la estructura del head -->
+<!-- explicacion: Luego deben agregar el body -->
+
+
+<body class="scroll">
+<!-- explicacion: dentro del body lo primero que deben agregar es el header y la barra de navegacion -->
+     
+
+
+<header class="ENCABEZADO">
+        <nav class="navegacion">
+            <a class="navegacion__enlace" href="#presentacion">
+              <h3 class="navegacion__titulo">Proyecto Final</h3></a>
+              <ul class="enlaces">
+                <li class="enlaces__item">
+            <a class="enlaces__enlace" href="#presentacion">Inicio</a>
+                </li>
+                <li class="enlaces__item">
+            <a class="enlaces__enlace" href="#sobre-mi">Recursos</a>
+                </li>
+                <li class="enlaces__item">
+            <a class="enlaces__enlace" href="#proyectos">Herramientas</a>
+                </li>
+              </ul>
+        </nav>
+
+<!--MENU-->
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <a href="{% url 'index' %}">
+                <img src="{% static 'img/logo.png' %}" alt="" width="100" height="100">
+            </a>
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+          {% if user.is_staff %}
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Cargar Datos
+              </a>
+              <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'apps.libros:agregar_categoria' %}">Agregar Categoría</a></li>
+                  <li><a class="dropdown-item" href="{% url 'apps.libros:agregar_libro' %}">Agregar Informacion</a></li>
+              </ul>
+          </li>
+          {% endif %}
+            
+
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{user.username }}
+              </a>
+              <ul class="dropdown-menu">
+                <form method="POST" action="{% url 'apps.blog_auth:cerrar_sesion' %}">
+                  {% csrf_token %}
+
+                  <button type="submit" class="dropdown-item">Cerrar sesión</button>
+
+                </form>
+
+                <!--<li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+
+              </ul>
+            </li>
+            {% endif %}
+
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'apps.libros:listar_libros' %}">Listados</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'nosotros' %}">Nosotros</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'formulario' %}">Formulario</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'apps.blog_auth:iniciar_sesion' %}">Iniciar sesion</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- repaso de la estructura del header y explicacion de los enlaces -->
+<!-- explicacion: A continuacion incluiremos la etiqueta main -->
+   
+<main class="principal">
+      <section class="presentacion" id="presentacion">
+            <div class="presentacion__contenedor_info">
+                <h1 class="presentacion__titulo">Recursos y Herramientas</h1>
+                <p class="presentacion__parrafo">para Desarrolladores</p>
+              <div class="presentacion__contenedor_botones">
+                <!--<a href="#sobre-mi" class="boton" role="button">Lenguaje</a>-->
+                <a href="https://github.com/Caba21766/proyecto" class="boton" target="_blank" role="button">GitHub Proyecto Final</a>
+                <a href="{% url 'curriculom' %}" class="boton" role="button">Curriculom Vitae</a>
+
+              </div>
+            </div>
+      </section>
+
+<!-- Repaso de las partes de la seccion -->
+<!-- Explicacion: Ahora agregaremos una seccion donde nos explayaremos 
+sobre nuestra historia personal, para ello escribiremos lo siguiente -->
+      <article class="articulo sobre_mi" id="sobre-mi">
+        <h2 class="articulo__titulo">Recursos</h2>
+        <div class="articulo__contenedor_descripciones">
+          <section class="seccion_descripcion">
+            <div class="seccion_descripcion__porta_retrato">
+              <img
+              class="seccion_descripcion__imagen"
+              src="{% static 'img/Assets/Images/profile/trabajo1.jfif' %}"
+              alt="foto trabajando en la oficina"
+              title="trabajando en la oficina"/>
+            </div>
+            <div
+              class="seccion_descripcion__info scroll scroll_fino scroll_gris"
+              aria-label="descripcion personal">
+              <h3 class="seccion_descripcion__titulo" id="mi_historia_titulo">Hosting</h3>
+              <p
+              class="seccion_descripcion__parrafo"
+                aria-label="Detalles de mi historia"
+                aria-describedby="mi_historia_titulo">
+                ¿Qué es un hosting?
+                Un hosting es el almacenamiento que aloja la información de diversos sitios web y que, por tanto, resguarda el contenido de un dominio.</p>
+              <p
+                class="seccion_descripcion__parrafo"
+                aria-label="Detalles de mi historia"
+                aria-describedby="mi_historia_titulo">
+                ¿Qué es un hosting y un ejemplo?
+                En este sentido, y de manera detallada, el hosting sirve para: Alojar los datos, la información, los programas y los recursos que permiten el funcionamiento de tu tienda virtual. Por ejemplo: catálogos de productos, pasarelas de pago, etc.</p>
+              <p
+                class="seccion_descripcion__parrafo"
+                aria-label="Detalles de mi historia"
+                aria-describedby="mi_historia_titulo">
+                ¿Qué tipos de hosting existen?
+                Tipos de hosting
+                Hosting compartido. Hosting privado virtual (VPS) Hosting de servidor dedicado. Hosting en la nube. Hosting administrado.</p>
+              <p
+                class="seccion_descripcion__parrafo"
+                aria-label="Detalles de mi historia"
+                aria-describedby="mi_historia_titulo">
+                ¿Cómo elegir el mejor hosting?
+                Buena reputación. ... Soporte técnico. ... Garantías. ... Espacio de almacenamiento. ... Opciones de tecnologías. ... Transferencia de datos. ... Múltiples dominios.</p> 
+            </div>
+          </section>
+            <!-- explicacion: seguidamente tendremos una seccion muy similar a la anterior 
+            pero cambiaremos el orden de los elementos dejando la imagen al final -->
+
+          <section class="seccion_descripcion">
+            <div
+                class="seccion_descripcion__info scroll scroll_fino scroll_gris"
+                aria-label="descripcion personal">
+                <h3 class="seccion_descripcion__titulo" id="mis_hobbies_titulo">Dominios</h3>
+              <p
+                class="seccion_descripcion__parrafo"
+                aria-label="Detalles de mis hobbies"
+                aria-describedby="mis_hobbies_titulo">
+                ¿Qué es un dominio?
+                Un dominio web es la dirección electrónica que sirve para encontrar tu sitio por medio de un navegador.</p>
+              <p
+                class="seccion_descripcion__parrafo"
+                aria-label="Detalles de mis hobbies"
+                aria-describedby="mis_hobbies_titulo">
+                ¿Cuáles son los tipos de dominio?
+                Según la Autoridad de Números Asignados de Internet (IANA, por sus siglas en inglés), existen 4 tipos de dominios de nivel superior: Dominio genérico de primer nivel (gTLD) ... Dominio de nivel superior patrocinado (sTLD) ... Dominio de nivel superior con código de país (ccTLD) ... Dominio de nivel superior de infraestructura.</p>
+              <p
+                class="seccion_descripcion__parrafo"
+                aria-label="Detalles de mis hobbies"
+                aria-describedby="mis_hobbies_titulo">
+                ¿Qué significa tener un dominio?
+                Un nombre de dominio (a menudo denominado simplemente dominio) es un nombre fácil de recordar asociado a una dirección IP física de Internet. Se trata del nombre único que se muestra después del signo @ en las direcciones de correo y después de www. en las direcciones web.</p>
+            </div>
+            <div class="seccion_descripcion__porta_retrato">
+                <img
+                class="seccion_descripcion__imagen seccion_descripcion__imagen_variante"
+                src="{% static 'img/Assets/Images/profile/trabajo2.jfif' %}"
+                alt="foto mientras me encontraba en una reunion de trabajo"
+                title="Selfie en una Reunion"/>
+            </div>
+        </section>
+        </div>
+
+          <!-- /* seccion_descripcion__imagen:hover"*/-->
+            <!-- REPASO article sobre mi y su estructura -->
+            <!-- explicacion: En la seccion que sigue agregaremos los proyectos en los que
+            trabajaron, no se preocupen si todavia no cuentan con ninguno, en el momento 
+            que comiencen a construirlos podran ir actualizando 
+            la informacion de esta seccion -->
+      </article>
+           
+      <article class="articulo proyectos" id="proyectos">
+        <h2 class="articulo__titulo">Herramientas</h2>
+        <div class="contenedor_tarjetas_grid">
+      <article
+
+            class="tarjeta"
+            aria-label="presentacion de proyecto personal">
+            <img
+              class="tarjeta__imagen"
+              src="{% static 'img/Assets/Images/proyectos/paisaje.jpg' %}"
+              alt="imagen del proyecto"
+              title="proyecto 1"/>
+
+          <div class="tarjeta__contenido">
+              <h3 class="tarjeta__titulo" id="titulo_proyecto_1">CSS</h3>
+              <span class="tarjeta__divisor"></span>
+                <p
+                class="tarjeta__parrafo scroll scroll_fino"
+                aria-label="descripcion de proyecto personal"
+                aria-describedby="titulo_proyecto_1">
+                CSS es utilizado para diseñar y dar estilo a las páginas web, por ejemplo, alterando la fuente, color, tamaño y espaciado del contenido,.</p>
+                <a href="#" class="boton boton_oscuro" target="_blank">Ir Inicio</a>
+          </div>
+
+          </article>
+            <!-- explicacion: pueden agregar tantas tarjetas como deseen, para ejemplificar agregaremos seis. 
+            Podemos hacerlo simplemente copiando y pegando. Yo en mi caso en algunas tarjetas agregare un pequeño cambio a los botones  -->
+          <article
+            class="tarjeta"
+            aria-label="presentacion de proyecto personal">
+            <img
+              class="tarjeta__imagen"
+              src="{% static 'img/Assets/Images/proyectos/juegos.jfif' %}"
+              alt="imagen del proyecto"
+              title="proyecto 2"/>
+            <div class="tarjeta__contenido">
+              <h3 class="tarjeta__titulo" id="titulo_proyecto_2">MySQL WorkBench</h3>
+              <span class="tarjeta__divisor"></span>
+              <p
+                class="tarjeta__parrafo scroll scroll_fino scroll_gris"
+                aria-label="descripcion de proyecto personal"
+                aria-describedby="titulo_proyecto_2">
+                MySQL es un sistema de gestión de bases de datos</p>
+              <a href="#" class="boton" target="_blank">Ir Inicio</a>
+            </div>
+          </article>
+
+          <article
+            class="tarjeta"
+            aria-label="presentacion de proyecto personal">
+          <img
+              class="tarjeta__imagen"
+              src="{% static 'img/Assets/Images/proyectos/html.png' %}"
+              alt="imagen del proyecto"
+              title="proyecto 3"/>
+            <div class="tarjeta__contenido">
+              <h3 class="tarjeta__titulo" id="titulo_proyecto_3">HTML</h3>
+              <span class="tarjeta__divisor"></span>
+              <p
+                class="tarjeta__parrafo scroll scroll_fino"
+                aria-label="descripcion de proyecto personal"
+                aria-describedby="titulo_proyecto_3">
+                HTML (Lenguaje de Marcas de Hipertexto, del inglés HyperText Markup Language) es el componente más básico de la Web.
+                </p>
+              <a href="#" class="boton boton_oscuro" target="_blank">Ir Inicio</a>
+            </div>
+
+          </article>
+          <article
+            class="tarjeta"
+            aria-label="presentacion de proyecto personal">
+            <img
+              class="tarjeta__imagen"
+              src="{% static 'img/Assets/Images/proyectos/Python.Jfif' %}"
+              alt="imagen del proyecto"
+              title="proyecto 4"/>
+
+            <div class="tarjeta__contenido">
+              <h3 class="tarjeta__titulo" id="titulo_proyecto_4">Python</h3>
+              <span class="tarjeta__divisor"></span>
+                <p
+                class="tarjeta__parrafo scroll scroll_fino scroll_gris"
+                aria-label="descripcion de proyecto personal"
+                aria-describedby="titulo_proyecto_4">
+                Python es un lenguaje de alto nivel de programación</p>
+                <a href="#" class="boton" target="_blank">Ir Inicio</a>
+            </div>
+
+          </article>
+          <article
+            class="tarjeta"
+            aria-label="presentacion de proyecto personal">
+            <img
+              class="tarjeta__imagen"
+              src="{% static 'img/Assets/Images/proyectos/calculadora.jfif' %}"
+              alt="imagen del proyecto"
+              title="proyecto 5"/>
+            <div class="tarjeta__contenido">
+              <h3 class="tarjeta__titulo" id="titulo_proyecto_5">Visual Studio Code</h3>
+              <span class="tarjeta__divisor"></span>
+                <p
+                class="tarjeta__parrafo scroll scroll_fino"
+                aria-label="descripcion de proyecto personal"
+                aria-describedby="titulo_proyecto_5">
+                Visual Studio Code es un editor de código fuente desarrollado por Microsoft </p>
+              <a href="#" class="boton boton_oscuro" target="_blank">Ir Inicio</a>
+
+            </div>
+          </article>
+          <article
+            class="tarjeta"
+            aria-label="presentacion de proyecto personal">
+              <img
+              class="tarjeta__imagen"
+              src="{% static 'img/Assets/Images/proyectos/reproductor.jpg' %}"
+              alt="imagen del proyecto"
+              title="proyecto 6"/>
+            <div class="tarjeta__contenido">
+              <h3 class="tarjeta__titulo" id="titulo_proyecto_6">Django</h3>
+              <span class="tarjeta__divisor"></span>
+                <p
+                class="tarjeta__parrafo scroll scroll_fino scroll_gris"
+                aria-label="descripcion de proyecto personal"
+                aria-describedby="titulo_proyecto_6">
+                Django facilita su trabajo al agrupar las diferentes funciones en una gran colección de módulos reutilizables, llamada marco de aplicación web</p>
+                <a href="#" class="boton" target="_blank">Ir Inicio</a>
+            </div>
+          </article>
+        </div>
+      </article>
+      <!-- repaso del articulo proyectos -->
+      </main>
+      <!-- Repaso de todo lo incluido en la etiqueta main -->
+      <!-- Por ultimo deben agregar la etiqueta footer. 
+      En esta aparecera nuestra informacion de contacto y 
+      también inluiremos enlaces de navegacion y derechos. -->
+
+      <footer class="pie_de_pagina" role="contentinfo">
+          <!-- explicacion: la primer columna sera para nuestras redes,
+          cabe aclarar que la estructura sera similar en todos los casos y solo 
+          habrá pequeños cambios -->
+        <div class="pie_de_pagina__columna">
+          <h4 class="pie_de_pagina__titulo_columna">Mis redes</h4>
+          <ul class="enlaces enlaces_redes">
+            <li class="enlaces__item">
+                <a
+                class="enlaces__enlace enlaces__enlace_footer"
+                href="https://github.com/"
+                target="_blank">
+                <img
+                  class="enlaces__icono"
+                  src="{% static 'img/Assets/Images/logos/github-logo.png' %}"
+                  alt="logo de github"
+                  title="github"/></a>
+            </li>
+            <li class="enlaces__item">
+                <a
+                class="enlaces__enlace enlaces__enlace_footer"
+                href="https://www.Facebook.com/"
+                target="_blank">
+                <img
+                  class="enlaces__icono"
+                  src="{% static 'img/Assets/Images/logos/ig-logo.png' %}"
+                  alt="logo de Facebook"
+                  title="Facebook"/></a>
+            </li>
+            <li class="enlaces__item">
+              <a
+                class="enlaces__enlace enlaces__enlace_footer"
+                href="https://twitter.com/"
+                target="_blank">
+                <img
+                  class="enlaces__icono"
+                  src="{% static 'img/Assets/Images/logos/x-logo.png' %}"
+                  alt="logo de X"
+                  title="X"/></a>
+            </li>
+          </ul>
+        </div>
+        <!-- explicacion: la segunda columna sera para nuestros medios de contacto  -->
+
+        <div class="pie_de_pagina__columna">
+          <h4 class="pie_de_pagina__titulo_columna">Contactame</h4>
+          <ul class="enlaces enlaces_vertical">
+           <li class="enlaces__item">
+              <a
+                class="enlaces__enlace enlaces__enlace_footer"
+                href="https://www.google.com/intl/es-419/gmail/about/"
+                target="_blank"
+                >Mail: neagestion@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- explicacion: la ultima columna sera para los enlaces de navegacion -->
+        <div class="pie_de_pagina__columna" role="navigation">
+          <h4 class="pie_de_pagina__titulo_columna">Secciones</h4>
+          <ul class="enlaces enlaces_vertical">
+            <li class="enlaces__item">
+              <a
+                class="enlaces__enlace enlaces__enlace_footer"
+                href="#presentacion"
+                >Inicio</a>
+            </li>
+            <li class="enlaces__item">
+              <a class="enlaces__enlace enlaces__enlace_footer" href="#sobre-mi"
+                >Recursos</a>
+            </li>
+            <li class="enlaces__item">
+              <a class="enlaces__enlace enlaces__enlace_footer" href="#proyectos"
+                >Herramientas</a>
+            </li>
+          </ul>
+        </div>
+        <!-- por ultimo los derechos de la pagina -->
+        <div class="pie_de_pagina__copyright">
+          <p>©️Copyright 2024</p>
+        </div>
+      </footer>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+      <!-- repaso de los elementos en el footer -->
+    </body>
+</html>
